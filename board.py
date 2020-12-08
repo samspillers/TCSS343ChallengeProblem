@@ -15,15 +15,6 @@ class Board:
                 return False
         return True
 
-    def __check_vector(self, queen_1: tuple, queen_2: tuple, vector_thus_far: tuple) -> bool:
-        if len(vector_thus_far) is self.d:
-            for s in range(1, self.n):
-                if queen_1 == tuple(queen_2[i] + s * vector_thus_far[i] for i in range(self.d)):
-                    return False
-            return True
-        else:
-            return self.__check_vector(queen_1, queen_2, vector_thus_far + (1,)) and self.__check_vector(queen_1, queen_2, vector_thus_far + (0,)) and self.__check_vector(queen_1, queen_2, vector_thus_far + (-1,))
-
     def add_queen(self, location: tuple):
         self.queens.append(location)
 
@@ -32,6 +23,21 @@ class Board:
         for queen in self.queens:
             self.__set_position(board, queen)
         return board
+
+    def __check_vector(self, queen_1: tuple, queen_2: tuple, vector_thus_far: tuple) -> bool:
+        if len(vector_thus_far) is self.d:
+            for s in range(1, self.n):
+                check_tuple = tuple()
+                for i in range(self.d):
+                    new_value = queen_2[i] + s * vector_thus_far[i]
+                    if new_value < 0 or new_value >= self.n:
+                        break
+                    check_tuple = check_tuple + (new_value,)
+                if len(check_tuple) is self.d and queen_1 == check_tuple:
+                    return False
+            return True
+        else:
+            return self.__check_vector(queen_1, queen_2, vector_thus_far + (1,)) and self.__check_vector(queen_1, queen_2, vector_thus_far + (0,)) and self.__check_vector(queen_1, queen_2, vector_thus_far + (-1,))
 
     def __generate_board_array(self, d_remaining: int):
         if d_remaining is 1:
