@@ -18,6 +18,9 @@ class Board:
     def add_queen(self, location: tuple):
         self.queens.append(location)
 
+    def remove_queen(self, location: tuple):
+        self.queens.remove(location)
+
     def generate_board_array(self):
         board = self.__generate_board_array(self.d)
         for queen in self.queens:

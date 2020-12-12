@@ -1,6 +1,10 @@
+from algorithm import min_squares, brute_force
 from board import Board
 
 if __name__ == '__main__':
+    print(brute_force(3, 3))
+
+def example():
     board1 = Board(8, 2)
     board1.add_queen((1, 2))
     print("Checking valid cells on board1:")
