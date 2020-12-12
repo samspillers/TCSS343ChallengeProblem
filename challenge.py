@@ -34,34 +34,18 @@ def example():
     board_array = board3.generate_board_array()
     print(board_array)
 
-async def async_function_test(the_function, output: list):
-    output.append(the_function())
-
-async def wait_15_minutes(output: list):
-    await asyncio.sleep(900)
-    output.append("Too long")
+# async def async_function_test(the_function, output: list):
+#     output.append(the_function())
+#
+# async def wait_15_minutes(output: list):
+#     await asyncio.sleep(900)
+#     output.append("Too long")
 
 if __name__ == '__main__':
     print("Started...")
-    results = []
-    for i in range(3, 20):
-        for j in range(3, 20):
-            output = []
-            start_time = time.time()
-            asyncio.run(async_function_test(lambda: brute_force(i, j), output))
-            asyncio.run(wait_15_minutes(output))
-            while len(output) == 0:
-                time.sleep(10)
-            pending = asyncio.all_tasks()
-            for task in pending:
-                task.cancel()
-            if output[0] == "Too long":
-                print("n:", i, "d:", j, "Too long")
-                if j is 3:
-                    print("Results: " + str(results))
-                    quit()
-                else:
-                    break
-            else:
-                print("n:", i, "d:", j, "Time:", time.time() - start_time)
-                results.append((i, j, time.time() - start_time))
+    n = 3
+    d = 3
+    output = []
+    start_time = time.time()
+    brute_force(n, d)
+    print("n:", n, "d:", d, "Time:", time.time() - start_time)
